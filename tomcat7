@@ -1,0 +1,69 @@
+#! /bin/sh  
+#shell script takes care of starting and stopping  
+# the glassfish DAS and glassfish instance.  
+#  
+# chkconfig: - 64 36  
+# description: Tomcat auto start  
+# /etc/init.d/tomcatd  
+# Tomcat auto-start  
+# Source function library.  
+#. /etc/init.d/functions  
+# source networking configuration.  
+#. /etc/sysconfig/network  
+. /root/.bashrc
+RETVAL=0
+#export JRE_HOME=/usr/java/jdk1.7.0_80/
+export CATALINA_HOME=/app/tomcat/apache-tomcat-7.0.73
+#export CATALINA_BASE=/app/tomcat/apache-tomcat-7.0.73
+#export CATALINA_PID=/var/run/tomcat/tomcat.pid 
+start()  
+{  
+        if [ -f $CATALINA_HOME/bin/startup.sh ];  
+          then  
+            echo $"Starting Tomcat"  
+                $CATALINA_HOME/bin/startup.sh  
+            RETVAL=$?  
+            echo "OK"  
+            return $RETVAL  
+        fi  
+}  
+stop()  
+{  
+        if [ -f $CATALINA_HOME/bin/shutdown.sh ];  
+          then  
+            echo $"Stopping Tomcat"  
+                $CATALINA_HOME/bin/shutdown.sh
+            while [ -f /var/run/tomcat/tomcat.pid ]
+            do
+		echo "waitting..."
+		sleep 2
+            done  
+            RETVAL=$?  
+            sleep 1
+            #ps -ef | grep apache-tomcat | grep -v 'grep' | awk '{print $2}' | xargs kill -9            
+            echo "OK"  
+            # [ $RETVAL -eq 0 ] && rm -f /var/lock/...  
+            return $RETVAL  
+        fi  
+}  
+  
+case "$1" in  
+ start)   
+        start  
+        ;;  
+ stop)    
+        stop  
+        ;;  
+                                                  
+ restart)  
+         echo $"Restaring Tomcat"  
+         $0 stop  
+         sleep 1  
+         $0 start  
+         ;;  
+ *)  
+        echo $"Usage: $0 {start|stop|restart}"  
+        exit 1  
+        ;;  
+esac  
+exit $RETVAL 

@@ -33,7 +33,7 @@ stop()
           then  
             echo $"Stopping Tomcat"  
                 $CATALINA_HOME/bin/shutdown.sh
-            while [ -f /var/run/tomcat/tomcat.pid ]
+            while [ -f /app/tomcat/apache-tomcat-7.0.73/run/tomcat.pid ]
             do
 		echo "waitting..."
 		sleep 2

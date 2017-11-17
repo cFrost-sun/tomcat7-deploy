@@ -19,8 +19,8 @@ if [ ! -d "$tomcat_deploy_path/tomcat7" ]; then
     mkdir "$tomcat_deploy_path/tomcat7"
 fi
 
-if [ -d "$jre_path/jre1.8.0_144" ]; then  
-    echo 'jre1.8.0_144 already exist'
+if [ -d "$jre_path/jre1.8.0_151" ]; then  
+    echo 'jre1.8.0_151 already exist'
     exit -1;
 fi
 
@@ -30,7 +30,7 @@ if [ -d "$tomcat_path/apache-tomcat-7.0.73" ]; then
 fi
 
 echo 'deploy jre'
-tar -xzf jre-8u144-linux-x64.tar.gz -C "$jre_path"
+tar -xzf jre-8u151-linux-x64.tar.gz -C "$jre_path"
 echo 'deploy tomcat'
 tar -xf apache-tomcat-7.0.73.tar -C "$tomcat_path"
 
